@@ -1,0 +1,29 @@
+body {
+    background-color: #F5A9A9;
+    font-family: Verdana, Arial, sans-serif;
+}
+
+#board{
+    height: 310px;
+    width: 310px;
+    margin: 50px auto;
+}
+
+#board div{
+    background-color:beige;
+    height: 90px;
+    width:  90px;
+    padding: 5px;
+    font-size:80px;
+    float: left;
+    text-align: center;
+}
+#cell1, #cell2, #cell3, #cell4, #cell5, #cell6 {
+    border-bottom: 5px solid darkslateblue;
+
+}
+#cell1, #cell4, #cell7, #cell2, #cell5, #cell8 {
+    border-right: 5px solid darkslateblue; 
+}
+
+    
