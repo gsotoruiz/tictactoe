@@ -41,4 +41,10 @@ body {
     float: right;
 }
 
-    
+#message{
+    height: fit-content;
+    width: 310px;
+    margin: 10px auto;
+    background-color: peachpuff;
+    text-align: center;
+}    

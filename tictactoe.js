@@ -4,7 +4,8 @@
     var cells=[];
     var endOfGame=false;
     var btnHint;
-    var btnReplay;    
+    var btnReplay; 
+    var divMessage;
 
     function verifyEmpty(position){
         if(board[position]===0){
@@ -53,40 +54,42 @@
     
     
     function playGame(position){
+        var resultado;
+        hide(divMessage);
         if (!endOfGame){                           
             if (verifyEmpty(position)){         
                 board[position]=1;              
                 drawMovements();
                 if (verifyWin(1)){              
                     endOfGame=true;
-                    alert("¡Felicidades¡ Has ganado el juego"); 
+                    resultado="¡Felicidades¡ Has ganado el juego"; 
                 }
                 else if (!cellsLeft()){               
                     endOfGame=true;
-                    alert("Se ha llenado el tablero 1. ¡Es un empate!"); 
+                    resultado="Se ha llenado el tablero. ¡Es un empate!";
                 }
                 else {                          
                     movementComputer();         
                     drawMovements();
                     if(verifyWin(2)){               
                         endOfGame=true;
-                        alert("Ha ganado la computadora");
+                        resultado="Ha ganado la computadora";
                     }
                     else if (!cellsLeft()){           
                         endOfGame=true;         
-                        alert("Se ha llenado el tablero 2. ¡Es un empate!");
+                        resultado="Se ha llenado el tablero. ¡Es un empate!";
                     }
                     else{                                   
-                        alert("Turno del jugador 1");                       }
+                        displayMessage("Turno del jugador 1");                       }
                 }
             }
             else {
-                alert("Casilla ocupada");
+                displayMessage("Casilla ocupada");
             }
             
         }
         if (endOfGame){                    
-            alert("Game Over");
+            displayMessage(resultado);
             show(btnReplay);
             hide(btnHint);
         }
@@ -131,6 +134,7 @@
         show(btnHint);
         drawMovements();
         endOfGame=false;
+        displayMessage("Juguemos gato")
     };
     
     function hint(){
@@ -144,6 +148,10 @@
         }
     };
    
+   function displayMessage(message){
+       show(divMessage);
+       divMessage.innerHTML=message;
+   }
     window.onload=function(){               
         for (var i = 0; i < board.length; i++) {
             cells[i]=document.getElementById("cell"+i);
@@ -154,5 +162,6 @@
         btnHint=document.getElementById("hint");
         btnReplay=document.getElementById("replay");
         hide(btnReplay);
+        divMessage=document.getElementById("message")
     };
     
