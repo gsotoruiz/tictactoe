@@ -26,4 +26,19 @@ body {
     border-right: 5px solid darkslateblue; 
 }
 
+#btnContainer{
+    height: 50px;
+    width: 310px;
+    margin: 10px auto;        
+}
+
+#hint{
+    width: 100px;
+    float: left;
+}
+#replay{
+    width: 100px;
+    float: right;
+}
+
     

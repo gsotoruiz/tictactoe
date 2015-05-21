@@ -3,16 +3,16 @@
     var board=[0,0,0,0,0,0,0,0,0];     
     var cells=[];
     var endOfGame=false;
-    
-    /*Verfifico que la posición está vacía*/
+    var btnHint;
+    var btnReplay;    
+
     function verifyEmpty(position){
         if(board[position]===0){
             return true;
         }
         return false;        
     };
- 
-    /*Obtengo la jugada de la computadora*/
+
     function movementComputer(){
         var position;
         if(cellsLeft()){
@@ -27,7 +27,6 @@
     };
     
     
-/*Verifico si me quedan celdas vacías*/
     function cellsLeft(){
         for(var i=0; i<board.length; i++){
             if (verifyEmpty(i)){
@@ -37,7 +36,7 @@
             return false;
     };
 
-/*Dibujo el movimiento*/
+
     function  drawMovements(){
         for(var i=0; i<board.length; i++){
             if (board[i]===0) {
@@ -52,27 +51,33 @@
         }        
     }
     
-/*Juegan por turnos*/    
+    
     function playGame(position){
-        if (!endOfGame){                           /*Si no se ha acabado el juego*/
-            if (verifyEmpty(position)){          /*Si la casilla está vacía*/
-                board[position]=1;              /*Marca la posición en el tablero*/
+        if (!endOfGame){                           
+            if (verifyEmpty(position)){         
+                board[position]=1;              
                 drawMovements();
-                if (!cellsLeft()){               /*Si ya no quedan celdas vacías*/
+                if (verifyWin(1)){              
                     endOfGame=true;
-                    alert("Se ha llenado el tablero 1"); 
+                    alert("¡Felicidades¡ Has ganado el juego"); 
                 }
-                else {                           /*Si todavía quedan celdas vacías*/
-                    movementComputer();         /*Juega la computadora*/
+                else if (!cellsLeft()){               
+                    endOfGame=true;
+                    alert("Se ha llenado el tablero 1. ¡Es un empate!"); 
+                }
+                else {                          
+                    movementComputer();         
                     drawMovements();
-                    if (!cellsLeft()){           /*Si ya no quedan celdas vacías*/
-                        endOfGame=true;         /*Se acaba el juego*/
-                        alert("Se ha llenado el tablero 2");
+                    if(verifyWin(2)){               
+                        endOfGame=true;
+                        alert("Ha ganado la computadora");
                     }
-                    else{                        /*Si todavía quedan celdas vacías*/            
-                        alert("Turno del jugador 1");   /*Juega el usuario*/
-
+                    else if (!cellsLeft()){           
+                        endOfGame=true;         
+                        alert("Se ha llenado el tablero 2. ¡Es un empate!");
                     }
+                    else{                                   
+                        alert("Turno del jugador 1");                       }
                 }
             }
             else {
@@ -80,18 +85,74 @@
             }
             
         }
-        if (endOfGame){                     /*Si ya se acabó el juego*/
+        if (endOfGame){                    
             alert("Game Over");
+            show(btnReplay);
+            hide(btnHint);
+        }
+    }; 
+    
+    function verifyWin(player){
+        if((board[0]===player && board[1]===player && board[2]===player) ||
+            (board[3]===player && board[4]===player && board[5]===player) ||
+            (board[6]===player && board[7]===player && board[8]===player) ||
+            (board[0]===player && board[3]===player && board[6]===player) ||
+            (board[1]===player && board[4]===player && board[7]===player) ||
+            (board[2]===player && board[5]===player && board[8]===player) ||
+            (board[0]===player && board[4]===player && board[8]===player) ||
+            (board[2]===player && board[4]===player && board[6]===player)){
+            return true;
+                };
+        return false;
+        
+    };
+    
+    function blink(element){  
+        for(var i=500; i < 3500; i+=500){
+	setTimeout(hide,i, element);
+	setTimeout(show,i+250, element);
         }
     };    
- 
-/*Asocio la función playGame(posicion) como acción para el evento onclick de cada celda*/
+
+    function show(element){
+	element.style.visibility = "visible";
+    };
+    
+    function hide(element) 
+    {
+	element.style.visibility = "hidden";
+    };
+
+    function replay(){
+        for(var i=0; i<board.length; i++){
+            board[i]=0;
+        }
+        hide(btnReplay);
+        show(btnHint);
+        drawMovements();
+        endOfGame=false;
+    };
+    
+    function hint(){
+        var position;
+        if(!endOfGame && cellsLeft()){  
+            do{    
+                position=Math.floor(Math.random()*9);
+            }while(!verifyEmpty(position)); 
+            var pista=document.getElementById("cell"+position);
+            blink(pista);
+        }
+    };
+   
     window.onload=function(){               
         for (var i = 0; i < board.length; i++) {
             cells[i]=document.getElementById("cell"+i);
             cells[i].onclick=function(e){
-                playGame(parseInt(this.getAttribute("id").charAt(4))); 
+                playGame(parseInt(this.getAttribute("id").charAt(4)));   
             };
         };
+        btnHint=document.getElementById("hint");
+        btnReplay=document.getElementById("replay");
+        hide(btnReplay);
     };
     
