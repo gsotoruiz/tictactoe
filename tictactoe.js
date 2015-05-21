@@ -162,6 +162,6 @@
         btnHint=document.getElementById("hint");
         btnReplay=document.getElementById("replay");
         hide(btnReplay);
-        divMessage=document.getElementById("message")
+        divMessage=document.getElementById("message");
     };
     
