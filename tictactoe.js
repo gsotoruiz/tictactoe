@@ -1,19 +1,15 @@
-
-    
     var board=[0,0,0,0,0,0,0,0,0];     
     var cells=[];
     var endOfGame=false;
     var btnHint;
     var btnReplay; 
     var divMessage;
-
     function verifyEmpty(position){
         if(board[position]===0){
             return true;
         }
         return false;        
     };
-
     function movementComputer(){
         var position;
         if(cellsLeft()){
@@ -26,8 +22,6 @@
             endOfGame=true;
         }
     };
-    
-    
     function cellsLeft(){
         for(var i=0; i<board.length; i++){
             if (verifyEmpty(i)){
@@ -36,8 +30,6 @@
         }
             return false;
     };
-
-
     function  drawMovements(){
         for(var i=0; i<board.length; i++){
             if (board[i]===0) {
@@ -50,9 +42,7 @@
                 cells[i].innerHTML="<font color='blue'>o</font>";
             };
         }        
-    }
-    
-    
+    };
     function playGame(position){
         var resultado;
         hide(divMessage);
@@ -94,7 +84,6 @@
             hide(btnHint);
         }
     }; 
-    
     function verifyWin(player){
         if((board[0]===player && board[1]===player && board[2]===player) ||
             (board[3]===player && board[4]===player && board[5]===player) ||
@@ -106,26 +95,21 @@
             (board[2]===player && board[4]===player && board[6]===player)){
             return true;
                 };
-        return false;
-        
+        return false;  
     };
-    
     function blink(element){  
         for(var i=500; i < 3500; i+=500){
 	setTimeout(hide,i, element);
 	setTimeout(show,i+250, element);
         }
-    };    
-
+    };   
     function show(element){
 	element.style.visibility = "visible";
     };
-    
     function hide(element) 
     {
 	element.style.visibility = "hidden";
     };
-
     function replay(){
         for(var i=0; i<board.length; i++){
             board[i]=0;
@@ -134,9 +118,8 @@
         show(btnHint);
         drawMovements();
         endOfGame=false;
-        displayMessage("Juguemos gato")
+        displayMessage("A jugar");
     };
-    
     function hint(){
         var position;
         if(!endOfGame && cellsLeft()){  
@@ -147,7 +130,6 @@
             blink(pista);
         }
     };
-   
    function displayMessage(message){
        show(divMessage);
        divMessage.innerHTML=message;
